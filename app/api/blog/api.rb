@@ -7,16 +7,16 @@ module Blog
     resource :weblogs do
     
       get do
-        Weblog.all
+        Weblog.all.to_json
       end
       
       get ':id' do
-        Weblog.find(params[:id])
+        Weblog.find(params[:id]).to_json
       end
       
       get ':id/posts' do
         weblog = Weblog.find(params[:id])
-        weblog.posts
+        weblog.posts.to_json
       end
       
       post ':id/posts' do
@@ -27,7 +27,7 @@ module Blog
         @weblog.posts << @post
         
         status 201
-        @post
+        @post.to_json
       end
       
       delete ':id/posts' do
@@ -42,7 +42,7 @@ module Blog
         @weblog.save 
         
         status 201
-        @weblog
+        @weblog.to_json
       end
       
       put ':id' do
@@ -51,15 +51,15 @@ module Blog
         @weblog.description = params[:description] if params[:description]
         @weblog.save
         
-        @weblog
+        @weblog.to_json
       end
       
       delete do
-        Weblog.destroy_all()
+        Weblog.destroy_all().to_json
       end
     
       delete ':id' do
-        Weblog.destroy(params[:id])
+        Weblog.destroy(params[:id]).to_json
       end
     
     end 
@@ -67,16 +67,16 @@ module Blog
     resource :posts do
     
       get do
-        Post.all
+        Post.all.to_json
       end
       
       get ':id' do
-        Post.find(params[:id])
+        Post.find(params[:id]).to_json
       end
       
       get ':id/comments' do
         @post = Post.find(params[:id])
-        @post.comments
+        @post.comments.to_json
       end
       
       delete ':id/comments' do
@@ -92,11 +92,11 @@ module Blog
         @post.comments << @comment
         
         status 201
-        @comment
+        @comment.to_json
       end
       
       delete ':id' do
-        Post.destroy(params[:id])
+        Post.destroy(params[:id]).to_json
       end
       
       put ':id' do
@@ -105,37 +105,37 @@ module Blog
         @post.body = params[:body] if params[:body]
         @post.save
         
-        @post
+        @post.to_json
       end
       
       delete do
-        Post.destroy_all()
+        Post.destroy_all().to_json
       end
       
     end
     
     resource :comments do
       get do
-        Comment.all
+        Comment.all.to_json
       end
       
       get ':id' do
-        Comment.find(params[:id])
+        Comment.find(params[:id]).to_json
       end
       
       put ':id' do
         @comment = Comment.find(params[:id])
         @comment.name = params[:name] if params[:name]
         @comment.body = params[:body] if params[:body]
-        @comment
+        @comment.to_json
       end
       
       delete ':id' do
-        Comment.destroy(params[:id])
+        Comment.destroy(params[:id]).to_json
       end
       
       delete do
-        Comment.destroy_all()
+        Comment.destroy_all().to_json
       end      
     end
       
